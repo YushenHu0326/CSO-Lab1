@@ -1,5 +1,5 @@
 /* 
- * <Yushen Hu yh3856>
+ * <Yushen Hu yh3856> 
  * 
  * bits.c - Source file with your solutions to the Lab.
  *          This is the file you will hand in to your instructor.
@@ -151,8 +151,7 @@ int bitXor(int x, int y) {
  *   Rating: 1
  */
 int tmin(void) {
-  int output = ~(~0u >> 1);
-  return output;
+  return ~(~0u >> 1);
 }
 //2
 /*
@@ -163,10 +162,7 @@ int tmin(void) {
  *   Rating: 2
  */
 int isTmax(int x) {
-  int a = ~((x + 1) ^ x);
-  int b = !(x + 1);
-  int output = a + b;
-  return output;
+  return ~((x + 1) ^ x) + !(x + 1);
 }
 /* 
  * allOddBits - return 1 if all odd-numbered bits in word set to 1
@@ -177,7 +173,7 @@ int isTmax(int x) {
  */
 int allOddBits(int x) {
   int a = 0xAA + (0xAA << 8);
-  a = a + a << 16;
+  a = a + (a << 16);
   int output = !((x & a) ^ a);
   return output;
 }
@@ -189,9 +185,7 @@ int allOddBits(int x) {
  *   Rating: 2
  */
 int negate(int x) {
-  int y = ~x;
-  y++;
-  return y;
+  return ~x + 1;
 }
 //3
 /* 
@@ -219,8 +213,8 @@ int isAsciiDigit(int x) {
  *   Rating: 3
  */
 int conditional(int x, int y, int z) {
-  int mask = !!x;
-  return (mask & y) | (~mask & z);
+  x = !!x;
+  return (x & y) | (~x & z);
 }
 /* 
  * isLessOrEqual - if x <= y  then return 1, else return 0 
