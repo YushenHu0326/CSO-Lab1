@@ -309,8 +309,8 @@ unsigned float_twice(unsigned uf) {
  */
 unsigned float_i2f(int x) {
   int sign = x & 0x80;
-  int frac = 0;
   int exp = 0;
+  int frac = 0;
 
   if (!x) return 0;
   while(x >> exp - 1) exp++;
