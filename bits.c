@@ -198,10 +198,11 @@ int negate(int x) {
  *   Rating: 3
  */
 int isAsciiDigit(int x) {
-  int above = 0x39 - x;
-  int below = x - 0x30;
-  above = above >> 4;
-  below = below >> 4;
+  int sign = 0 << 31;
+  int above = ~(0x39 | sign);
+  int below = ~0x30;
+  above = ((above + x) >> 31) & sign;
+  below = ((below + x + 1) >> 31) & sign;
   int output = !(above | below);
   return output;
 }
