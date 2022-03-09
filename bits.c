@@ -308,24 +308,29 @@ unsigned float_twice(unsigned uf) {
  *   Rating: 4
  */
 unsigned float_i2f(int x) {
-  int e = 158;
-  int a = 1 << 31;
-  int sign = x & a;
-  int frac;
+  int sign = x & 0x80;
+  int frac = 0;
+  int exp = 0;
 
-  if (x == a) return a | (158 << 23);
   if (!x) return 0;
-
-  if (sign) x = ~x + 1;
-
-  while (!(x & a)) {
-        x = x<<1;
-        e = e -1;
+  while(x >> exp - 1) exp++;
+  
+  int leftOver = 23 - exp;
+  if (leftOver >= 0) {
+    frac = (x ^ (1 << leftOver));
   }
-
-  frac = (x & (~a)) >> 8;
-  if (x & 0x80 && ((x & 0x7F) > 0 || frac&1)) frac = frac + 1;
-  return sign + (e<<23) + frac;
+  else{
+    int a = x & (1 << (-leftOver) - 1);
+    int b = 1 << (-leftOver);
+    frac = (x >> (-leftOver)) & 0x7fffff;
+    if (a > b) {
+      frac += 1;
+    }
+  }
+  
+  exp += 127;
+  exp = exp << 23;
+  return sign + exp + frac;
 }
 /* 
  * float_f2i - Return bit-level equivalent of expression (int) f
